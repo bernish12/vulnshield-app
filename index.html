@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BernishVuln_Shield | Advanced Security Auditing & Vulnerability Scanner</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="BernishVuln_Shield is a free advanced cybersecurity scanner. Scan websites for OWASP Top 10 vulnerabilities, check security headers, audit Android apps, analyze source code for secrets, and assess device compliance — all in one tool.">
+    <meta name="keywords" content="vulnerability scanner, OWASP Top 10, security audit, cybersecurity tool, web app security, XSS scanner, SQL injection, CSP checker, security headers, Android manifest audit, secrets scanner, device compliance, free security tool, BernishVuln Shield, VulnShield">
+    <meta name="author" content="BernishVuln_Shield">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://vulnshield.onrender.com/">
+
+    <!-- Open Graph (Facebook, LinkedIn, WhatsApp previews) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="BernishVuln_Shield | Free Security & Vulnerability Scanner">
+    <meta property="og:description" content="Scan any website for OWASP Top 10 vulnerabilities, security headers, exposed secrets and more. Free advanced cybersecurity auditing tool.">
+    <meta property="og:url" content="https://vulnshield.onrender.com/">
+    <meta property="og:site_name" content="BernishVuln_Shield">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BernishVuln_Shield | Free Security & Vulnerability Scanner">
+    <meta name="twitter:description" content="Scan any website for OWASP Top 10 vulnerabilities, security headers, exposed secrets and more. Free advanced cybersecurity auditing tool.">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Auth Guard -->
+    <script src="auth.js"></script>
+</head>
+<body class="cyber-theme">
+    <!-- Cyber Grid Background -->
+    <div class="cyber-grid"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-shield-halved fa-beat-fade"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-main">BERNISH<span class="text-accent">VULN_SHIELD</span></span>
+                    <span class="logo-sub">SEC-AUDIT v1.2.0</span>
+                </div>
+            </div>
+
+            <nav class="nav-links">
+                <a href="#dashboard" class="nav-item active" data-tab="dashboard">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#scan-web" class="nav-item" data-tab="scan-web">
+                    <i class="fa-solid fa-globe"></i>
+                    <span>Website Scan</span>
+                </a>
+                <a href="#scan-app" class="nav-item" data-tab="scan-app">
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                    <span>App & Code Scan</span>
+                </a>
+                <a href="#scan-device" class="nav-item" data-tab="scan-device">
+                    <i class="fa-solid fa-laptop-code"></i>
+                    <span>Device Audit</span>
+                </a>
+                <a href="#scan-owasp" class="nav-item" data-tab="scan-owasp">
+                    <i class="fa-solid fa-bug-slash"></i>
+                    <span>OWASP Top 10</span>
+                </a>
+                <a href="#threat-feed" class="nav-item" data-tab="threat-feed">
+                    <i class="fa-solid fa-rss"></i>
+                    <span>Threat Intel</span>
+                </a>
+                <a href="#reports" class="nav-item" data-tab="reports">
+                    <i class="fa-solid fa-file-shield"></i>
+                    <span>Audit Reports</span>
+                </a>
+                <a href="analytics.html" id="nav-visitor-analytics" class="nav-item" style="color: #64ffda; display: none;">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Visitor Analytics</span>
+                </a>
+                <a href="javascript:void(0)" onclick="logout()" class="nav-item text-danger" style="margin-top: 1rem; color: #ff5252;">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <div class="status-indicator online"></div>
+                    <div class="status-details">
+                        <span class="status-title">LOCAL AGENT</span>
+                        <span class="status-value">Ready & Active</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header bar -->
+            <header class="content-header">
+                <div class="header-title-container">
+                    <h1 id="page-title">Security Control Center</h1>
+                    <p id="page-subtitle">Real-time client-side security assessment engine</p>
+                </div>
+                <div class="header-actions">
+                    <!-- Live Calendar & Time Widget -->
+                    <div class="live-clock-widget" id="live-clock-widget">
+                        <i class="fa-regular fa-calendar-days text-accent mr-1"></i>
+                        <span id="live-date-text" class="live-date">-- --- ----</span>
+                        <span class="clock-divider">|</span>
+                        <i class="fa-regular fa-clock text-accent mr-1"></i>
+                        <span id="live-time-text" class="live-time">--:--:--</span>
+                    </div>
+
+                    <div class="quick-stat">
+                        <span class="stat-label">RISK FACTOR:</span>
+                        <span class="stat-value text-green" id="global-risk-factor">EXCELLENT</span>
+                    </div>
+                    <button class="btn btn-primary" id="btn-quick-audit">
+                        <i class="fa-solid fa-bolt"></i> Quick Audit
+                    </button>
+                    <button class="btn" onclick="logout()" title="Logout" style="background: rgba(255, 82, 82, 0.15); border: 1px solid rgba(255, 82, 82, 0.3); color: #ff5252; cursor: pointer; padding: 0.5rem 0.9rem; border-radius: 8px; font-weight: 600;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </div>
+            </header>
+
+            <!-- Scrollable Content wrapper -->
+            <div class="content-body">
+                
+                <!-- ================= TAB: DASHBOARD ================= -->
+                <section id="tab-dashboard" class="tab-pane active">
+                    <div class="grid-layout cols-3">
+                        <!-- Security Score Card -->
+                        <div class="card card-glow border-accent-glow col-span-1">
+                            <h3 class="card-title">Security Score</h3>
+                            <div class="gauge-container">
+                                <svg class="gauge-svg" viewBox="0 0 100 100">
+                                    <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
+                                    <circle class="gauge-fill" cx="50" cy="50" r="40" stroke-dasharray="251.2" stroke-dashoffset="251.2" id="dashboard-gauge"></circle>
+                                </svg>
+                                <div class="gauge-text">
+                                    <span class="gauge-val" id="dashboard-score-val">--</span>
+                                    <span class="gauge-label">Score</span>
+                                </div>
+                            </div>
+                            <div class="score-breakdown">
+                                <div class="breakdown-item">
+                                    <span>Web Audit</span>
+                                    <span class="text-accent" id="score-web">N/A</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span>Static App Analysis</span>
+                                    <span class="text-accent" id="score-app">N/A</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span>Host OS / Device</span>
+                                    <span class="text-accent" id="score-device">N/A</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span>OWASP Top 10</span>
+                                    <span class="text-accent" id="score-owasp">N/A</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Overview Chart -->
+                        <div class="card col-span-2">
+                            <h3 class="card-title">Security Posture Status</h3>
+                            <div class="posture-summary-grid">
+                                <div class="posture-stat-box">
+                                    <span class="box-number text-red" id="stat-high">0</span>
+                                    <span class="box-label">High Vulns</span>
+                                </div>
+                                <div class="posture-stat-box">
+                                    <span class="box-number text-orange" id="stat-medium">0</span>
+                                    <span class="box-label">Medium Vulns</span>
+                                </div>
+                                <div class="posture-stat-box">
+                                    <span class="box-number text-blue" id="stat-low">0</span>
+                                    <span class="box-label">Low / Info</span>
+                                </div>
+                                <div class="posture-stat-box">
+                                    <span class="box-number text-green" id="stat-passed">0</span>
+                                    <span class="box-number text-green" id="stat-passed">0</span>
+                                </div>
+                            </div>
+                            <div class="threat-matrix-box">
+                                <div class="matrix-header">
+                                    <span>Active Risk Log</span>
+                                    <span class="badge badge-accent">Live</span>
+                                </div>
+                                <div class="matrix-list" id="dashboard-recent-logs">
+                                    <div class="matrix-empty">No scans have been performed yet. Start a scan from the sidebar to begin diagnostics.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Target Selection Section -->
+                    <h2 class="section-heading"><i class="fa-solid fa-crosshairs"></i> Select Target Vector</h2>
+                    <div class="grid-layout cols-3">
+                        <!-- Vector Card 1: Web -->
+                        <div class="card hover-expand text-center pointer" onclick="app.switchTab('scan-web')">
+                            <div class="vector-icon bg-soft-blue text-blue">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <h3>Web Scan Engine</h3>
+                            <p class="text-muted">Validate domain security configs, DNSSEC validation, spoofing records, SSL parameters, and OWASP protections.</p>
+                            <span class="btn-link">Initialize Scan <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+
+                        <!-- Vector Card 2: App -->
+                        <div class="card hover-expand text-center pointer" onclick="app.switchTab('scan-app')">
+                            <div class="vector-icon bg-soft-purple text-purple">
+                                <i class="fa-solid fa-mobile-screen-button"></i>
+                            </div>
+                            <h3>App Configuration & Secrets</h3>
+                            <p class="text-muted">Perform static code audits on package manifests (Android), configuration files, package dependencies, and private credentials.</p>
+                            <span class="btn-link">Initialize Scan <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+
+                        <!-- Vector Card 3: Device -->
+                        <div class="card hover-expand text-center pointer" onclick="app.switchTab('scan-device')">
+                            <div class="vector-icon bg-soft-emerald text-emerald">
+                                <i class="fa-solid fa-laptop-shield"></i>
+                            </div>
+                            <h3>Local Host & Device Auditor</h3>
+                            <p class="text-muted">Check local browser privacy headers, WebRTC leak points, platform-specific protection controls, and custom security settings.</p>
+                            <span class="btn-link">Initialize Scan <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+
+                        <!-- Vector Card 4: OWASP -->
+                        <div class="card hover-expand text-center pointer" onclick="app.switchTab('scan-owasp')">
+                            <div class="vector-icon bg-soft-red text-red">
+                                <i class="fa-solid fa-bug-slash"></i>
+                            </div>
+                            <h3>OWASP Top 10 Scanner</h3>
+                            <p class="text-muted">Perform passive analysis against all OWASP Top 10 web application vulnerability categories on any live URL target.</p>
+                            <span class="btn-link">Initialize Scan <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= TAB: WEBSITE SCAN ================= -->
+                <section id="tab-scan-web" class="tab-pane">
+                    <div class="card">
+                        <h3 class="card-title">Network & Web Configuration Scan</h3>
+                        <p class="text-muted mb-4">Validate DNS settings, email fraud protection configuration (SPF/DMARC), CAA authorization rules, and verify OWASP security profiles.</p>
+                        
+                        <div class="scan-input-group">
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-globe input-icon"></i>
+                                <input type="text" id="web-scan-input" placeholder="Enter website domain (e.g., example.com)" value="">
+                            </div>
+                            <button class="btn btn-primary" id="btn-web-scan">
+                                <i class="fa-solid fa-magnifying-glass"></i> Scan Target
+                            </button>
+                        </div>
+                        <div class="form-feedback text-red d-none" id="web-input-error">Please enter a valid domain name (e.g., github.com).</div>
+                    </div>
+
+                    <div class="grid-layout cols-3 mt-4 d-none" id="web-scan-results-container">
+                        <!-- Scan Status / Radar UI -->
+                        <div class="card col-span-1">
+                            <h4 class="card-title">Scanning Diagnostics</h4>
+                            <div class="radar-box">
+                                <div class="radar-ring"></div>
+                                <div class="radar-ring" style="animation-delay: 1s;"></div>
+                                <div class="radar-sweep"></div>
+                                <div class="radar-core">
+                                    <i class="fa-solid fa-shield-halved radar-core-icon"></i>
+                                </div>
+                            </div>
+                            <div class="scan-status-indicator mt-3 text-center">
+                                <span class="status-badge pulse-active" id="web-status-badge">STANDBY</span>
+                                <p class="text-muted small mt-2" id="web-scan-status-text">Target loaded, awaiting initiation...</p>
+                            </div>
+
+                            <div class="terminal-box mt-3">
+                                <div class="terminal-header">
+                                    <span class="terminal-dot red"></span>
+                                    <span class="terminal-dot yellow"></span>
+                                    <span class="terminal-dot green"></span>
+                                    <span class="terminal-title">Web Security Engine Output</span>
+                                </div>
+                                <div class="terminal-body" id="web-terminal-logs">
+                                    <div>[SYSTEM] Ready to audit website targets...</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Findings Output List -->
+                        <div class="card col-span-2">
+                            <div class="card-header-actions">
+                                <h4 class="card-title">Web Vulnerability Diagnostics</h4>
+                                <div class="header-filters">
+                                    <button class="filter-tab active" data-filter="all">All (<span id="count-web-all">0</span>)</button>
+                                    <button class="filter-tab" data-filter="high">High (<span id="count-web-high">0</span>)</button>
+                                    <button class="filter-tab" data-filter="warning">Medium (<span id="count-web-med">0</span>)</button>
+                                    <button class="filter-tab" data-filter="passed">Passed (<span id="count-web-passed">0</span>)</button>
+                                </div>
+                            </div>
+                            
+                            <div class="findings-list" id="web-findings-list">
+                                <!-- Populated dynamically by javascript -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= TAB: OWASP TOP 10 SCAN ================= -->
+                <section id="tab-scan-owasp" class="tab-pane">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fa-solid fa-bug-slash"></i> OWASP Top 10 Web Application Scanner</h3>
+                        <p class="text-muted mb-4">Enter a live URL to perform passive security analysis across all 10 OWASP vulnerability categories. The scanner inspects HTTP headers, cookies, HTML content, and exposed endpoints.</p>
+
+                        <div class="scan-input-group">
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-link input-icon"></i>
+                                <input type="text" id="owasp-scan-input" placeholder="Enter full URL (e.g., https://example.com)" value="">
+                            </div>
+                            <button class="btn btn-primary" id="btn-owasp-scan">
+                                <i class="fa-solid fa-shield-halved"></i> Run OWASP Scan
+                            </button>
+                        </div>
+                        <div class="form-feedback text-red d-none" id="owasp-input-error">Please enter a valid URL (e.g., https://example.com).</div>
+                    </div>
+
+                    <div class="grid-layout cols-3 mt-4 d-none" id="owasp-scan-results-container">
+                        <!-- Scan Status / Radar UI -->
+                        <div class="card col-span-1">
+                            <h4 class="card-title">OWASP Scan Diagnostics</h4>
+                            <div class="radar-box">
+                                <div class="radar-ring"></div>
+                                <div class="radar-ring" style="animation-delay: 1s;"></div>
+                                <div class="radar-sweep"></div>
+                                <div class="radar-core">
+                                    <i class="fa-solid fa-bug-slash radar-core-icon"></i>
+                                </div>
+                            </div>
+                            <div class="scan-status-indicator mt-3 text-center">
+                                <span class="status-badge pulse-active" id="owasp-status-badge">STANDBY</span>
+                                <p class="text-muted small mt-2" id="owasp-scan-status-text">Target loaded, awaiting initiation...</p>
+                            </div>
+
+                            <div class="terminal-box mt-3">
+                                <div class="terminal-header">
+                                    <span class="terminal-dot red"></span>
+                                    <span class="terminal-dot yellow"></span>
+                                    <span class="terminal-dot green"></span>
+                                    <span class="terminal-title">OWASP Engine Output</span>
+                                </div>
+                                <div class="terminal-body" id="owasp-terminal-logs">
+                                    <div>[SYSTEM] Ready to audit web application targets...</div>
+                                </div>
+                            </div>
+
+                            <!-- OWASP Category Breakdown -->
+                            <div class="owasp-category-breakdown mt-3">
+                                <h5 class="card-title" style="font-size: 13px;">Category Breakdown</h5>
+                                <div class="owasp-cats-grid" id="owasp-cats-grid">
+                                    <div class="owasp-cat-chip" data-cat="A01"><span class="cat-id">A01</span><span class="cat-name">Access Ctrl</span><span class="cat-status">—</span></div>
+                                    <div class="owasp-cat-chip" data-cat="A02"><span class="cat-id">A02</span><span class="cat-name">Crypto</span><span class="cat-status">—</span></div>
+                                    <div class="owasp-cat-chip" data-cat="A03"><span class="cat-id">A03</span><span class="cat-name">Injection</span><span class="cat-status">—</span></div>
+                                    <div class="owasp-cat-chip" data-cat="A04"><span class="cat-id">A04</span><span class="cat-name">Design</span><span class="cat-status">—</span></div>
+                                    <div class="owasp-cat-chip" data-cat="A05"><span class="cat-id">A05</span><span class="cat-name">Misconfig</span><span class="cat-status">—</span></div>
+                                    <div class="owasp-cat-chip" data-cat="A06"><span class="cat-id">A06</span><span class="cat-name">Components</span><span class="cat-status">—</span></div>
+                                    <div class="owasp-cat-chip" data-cat="A07"><span class="cat-id">A07</span><span class="cat-name">Auth</span><span class="cat-status">—</span></div>
+                                    <div class="owasp-cat-chip" data-cat="A08"><span class="cat-id">A08</span><span class="cat-name">Integrity</span><span class="cat-status">—</span></div>
+                                    <div class="owasp-cat-chip" data-cat="A09"><span class="cat-id">A09</span><span class="cat-name">Logging</span><span class="cat-status">—</span></div>
+                                    <div class="owasp-cat-chip" data-cat="A10"><span class="cat-id">A10</span><span class="cat-name">SSRF</span><span class="cat-status">—</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Findings Output List -->
+                        <div class="card col-span-2">
+                            <div class="card-header-actions">
+                                <h4 class="card-title">OWASP Top 10 Vulnerability Findings</h4>
+                                <div class="header-filters" id="owasp-header-filters">
+                                    <button class="filter-tab active" data-filter="all">All (<span id="count-owasp-all">0</span>)</button>
+                                    <button class="filter-tab" data-filter="high">High (<span id="count-owasp-high">0</span>)</button>
+                                    <button class="filter-tab" data-filter="warning">Medium (<span id="count-owasp-med">0</span>)</button>
+                                    <button class="filter-tab" data-filter="passed">Passed (<span id="count-owasp-passed">0</span>)</button>
+                                </div>
+                            </div>
+
+                            <div class="findings-list" id="owasp-findings-list">
+                                <!-- Populated dynamically by javascript -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= TAB: APP SCAN ================= -->
+                <section id="tab-scan-app" class="tab-pane">
+                    <div class="grid-layout cols-3">
+                        <!-- Control panel -->
+                        <div class="card col-span-1">
+                            <h3 class="card-title">Static App Config Scanner</h3>
+                            <p class="text-muted small">Upload configuration files, package manifests, or code snippets. The scanner statically audits settings for common vulnerabilities.</p>
+                            
+                            <!-- Custom File Upload Area -->
+                            <div class="upload-area" id="app-upload-area">
+                                <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                                <span class="upload-title">Drop configuration files here</span>
+                                <span class="upload-subtitle">Accepts XML (Android Manifest), JSON (package.json, config), Env (.env), or text files</span>
+                                <input type="file" id="app-file-input" class="file-input" accept=".xml,.json,.env,.js,.py,.txt">
+                                <button class="btn btn-secondary mt-2">Browse Files</button>
+                            </div>
+
+                            <!-- Preset Templates to make testing extremely easy -->
+                            <div class="preset-templates-box mt-3">
+                                <h5>Quick Templates for Testing</h5>
+                                <p class="text-muted small">Load dummy code configs containing common vulnerabilities to see how they are detected.</p>
+                                <div class="template-buttons">
+                                    <button class="btn btn-outline-cyber w-full mb-2" id="load-tmpl-manifest">
+                                        <i class="fa-solid fa-android"></i> AndroidManifest.xml (Vulnerable)
+                                    </button>
+                                    <button class="btn btn-outline-cyber w-full mb-2" id="load-tmpl-secrets">
+                                        <i class="fa-solid fa-key"></i> Credentials / Env (Secrets leak)
+                                    </button>
+                                    <button class="btn btn-outline-cyber w-full" id="load-tmpl-package">
+                                        <i class="fa-brands fa-node-js"></i> package.json (Vulnerable Deps)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Code Viewer and Output Analysis -->
+                        <div class="card col-span-2">
+                            <div class="card-header-actions">
+                                <h3 class="card-title">Code Audit Workbench</h3>
+                                <button class="btn btn-primary" id="btn-run-app-scan" disabled>
+                                    <i class="fa-solid fa-shield-halved"></i> Run Vulnerability Audit
+                                </button>
+                            </div>
+
+                            <div class="code-editor-panel mt-3">
+                                <div class="editor-header">
+                                    <span class="editor-filename" id="app-editor-filename">untitled_config.txt</span>
+                                    <span class="editor-lang" id="app-editor-lang">plain text</span>
+                                </div>
+                                <textarea id="app-editor-textarea" placeholder="Paste your application configuration manifest, secret file, or source code here to run a static vulnerability check..."></textarea>
+                            </div>
+
+                            <!-- Analysis Results -->
+                            <div class="app-scan-results-box mt-4 d-none" id="app-scan-results-box">
+                                <h4 class="card-title">Static Audit Discoveries</h4>
+                                <div class="findings-list mt-2" id="app-findings-list">
+                                    <!-- Populated dynamically by javascript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= TAB: DEVICE AUDIT ================= -->
+                <section id="tab-scan-device" class="tab-pane">
+                    <div class="grid-layout cols-3">
+                        <!-- Browser Environment Assessment -->
+                        <div class="card col-span-1">
+                            <h3 class="card-title">Browser Environment Audit</h3>
+                            <p class="text-muted small">Real-time local browser privacy and footprint checks.</p>
+                            
+                            <div class="env-audit-list mt-3" id="env-audit-list">
+                                <!-- Populated dynamically by scanner-device.js -->
+                            </div>
+                        </div>
+
+                        <!-- Interactive Host Operating System Auditor Questionnaire -->
+                        <div class="card col-span-2">
+                            <h3 class="card-title">Laptop & Mobile Security Audit Checklist</h3>
+                            <p class="text-muted">Select your target device operating system and perform a comprehensive security configuration checklist to calculate the device score.</p>
+                            
+                            <div class="tab-selectors mt-3">
+                                <button class="btn-tab active" data-os="windows"><i class="fa-brands fa-windows"></i> Windows</button>
+                                <button class="btn-tab" data-os="macos"><i class="fa-brands fa-apple"></i> macOS</button>
+                                <button class="btn-tab" data-os="android"><i class="fa-brands fa-android"></i> Android</button>
+                                <button class="btn-tab" data-os="ios"><i class="fa-solid fa-mobile-button"></i> iOS</button>
+                            </div>
+
+                            <div class="os-audit-card mt-3">
+                                <div class="audit-checklist" id="os-audit-checklist">
+                                    <!-- Populated dynamically based on chosen OS -->
+                                </div>
+                            </div>
+
+                            <div class="device-audit-footer mt-4">
+                                <div class="device-audit-score-summary">
+                                    <span>DEVICE COMPLIANCE RATING:</span>
+                                    <span class="score-badge text-yellow" id="device-score-badge">0%</span>
+                                </div>
+                                <button class="btn btn-primary" id="btn-save-device-audit">
+                                    <i class="fa-solid fa-clipboard-check"></i> Commit Audit Findings
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= TAB: THREAT FEED ================= -->
+                <section id="tab-threat-feed" class="tab-pane">
+                    <div class="card">
+                        <div class="card-header-actions">
+                            <div>
+                                <h3 class="card-title">Live NVD / CVE Vulnerability Intelligence Search</h3>
+                                <p class="text-muted small">Search National Vulnerability Database (NVD) & live threat intelligence feeds for vulnerabilities.</p>
+                            </div>
+                            <span class="badge badge-accent fa-pulse"><i class="fa-solid fa-circle-dot"></i> Live NVD Sync</span>
+                        </div>
+
+                        <!-- CVE Search Bar -->
+                        <div class="cve-search-bar mt-3 d-flex" style="gap: 10px;">
+                            <input type="text" id="cve-search-input" class="form-input" style="flex:1;" placeholder="Search by software name, CVE ID, or tech stack (e.g., Nginx, WordPress, OpenSSL, Apache)...">
+                            <button class="btn btn-primary" id="btn-search-cve">
+                                <i class="fa-solid fa-magnifying-glass"></i> Search CVE Database
+                            </button>
+                        </div>
+
+                        <div class="threat-feed-container mt-4" id="cve-results-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= TAB: REPORTS ================= -->
+                <section id="tab-reports" class="tab-pane">
+                    <div class="card">
+                        <h3 class="card-title">Generate Security Vulnerability Reports</h3>
+                        <p class="text-muted">Review, export, and download comprehensive audits compiled across web, application configs, and host compliance vectors.</p>
+                        
+                        <div class="report-stats-grid mt-4" style="grid-template-columns: repeat(5, 1fr);">
+                            <div class="report-stat-item" style="border: 2px solid rgba(100,255,218,0.3); background: rgba(100,255,218,0.05);">
+                                <span class="num text-accent" id="report-executive-grade" style="font-size: 2.2rem; font-weight: 900;">--</span>
+                                <span class="lbl" id="report-executive-label" style="font-size: 0.75rem; font-weight: 700;">SECURITY GRADE</span>
+                            </div>
+                            <div class="report-stat-item">
+                                <span class="num text-accent" id="report-global-score">--</span>
+                                <span class="lbl">Global Posture Score</span>
+                            </div>
+                            <div class="report-stat-item">
+                                <span class="num text-red" id="report-high-count">0</span>
+                                <span class="lbl">High Risks Flagged</span>
+                            </div>
+                            <div class="report-stat-item">
+                                <span class="num text-orange" id="report-med-count">0</span>
+                                <span class="lbl">Medium Risks Flagged</span>
+                            </div>
+                            <div class="report-stat-item">
+                                <span class="num text-green" id="report-passed-count">0</span>
+                                <span class="lbl">Diagnostics Passed</span>
+                            </div>
+                        </div>
+
+                        <div class="report-actions-container mt-4">
+                            <button class="btn btn-primary mr-2" id="btn-export-pdf" onclick="ReportGenerator.exportPdf()">
+                                <i class="fa-solid fa-file-pdf"></i> Download Executive PDF Report
+                            </button>
+                            <button class="btn btn-secondary mr-2" id="btn-export-json" onclick="ReportGenerator.exportJson()">
+                                <i class="fa-solid fa-download"></i> Export JSON Report
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <h4 class="card-title">Executive Summary Log</h4>
+                        <div class="executive-summary-log mt-3" id="executive-summary-log">
+                            <div class="empty-state">No vulnerability scans have been committed yet. Fill out individual assessment blocks to build reports.</div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast-notification d-none" id="toast-notif">
+        <i class="fa-solid fa-circle-check toast-icon text-green"></i>
+        <div class="toast-content">
+            <span class="toast-title">Scan Complete</span>
+            <span class="toast-desc">Successfully executed domain health diagnostics.</span>
+        </div>
+    </div>
+
+    <!-- jsPDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- Main JavaScript Modules -->
+    <script src="scanner-web.js"></script>
+    <script src="scanner-app.js"></script>
+    <script src="scanner-owasp.js"></script>
+    <script src="scanner-device.js"></script>
+    <script src="report-generator.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
