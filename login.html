@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BernishVuln_Shield – Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="auth.js"></script>
+    <style>
+        body { display:flex; justify-content:center; align-items:center; height:100vh; background:#0d0d0d; color:#e0e0e0; }
+        .login-card { background:rgba(255,255,255,0.05); backdrop-filter:blur(8px); padding:2rem; border-radius:12px; width:320px; box-shadow:0 4px 12px rgba(0,0,0,0.4); }
+        .login-card h2 { margin:0 0 1.5rem; text-align:center; font-weight:600; }
+        .login-card input { width:100%; padding:0.6rem 0.8rem; margin-bottom:1rem; border:none; border-radius:6px; background:rgba(255,255,255,0.1); color:#fff; box-sizing: border-box; }
+        .pwd-container { position: relative; width: 100%; margin-bottom: 1rem; }
+        .pwd-container input { margin-bottom: 0; padding-right: 2.5rem; }
+        .pwd-container i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #a8b2d1; transition: color 0.2s; }
+        .pwd-container i:hover { color: #64ffda; }
+        .login-card button { width:100%; padding:0.7rem; border:none; border-radius:6px; background:#00bcd4; color:#fff; font-weight:600; cursor:pointer; }
+        .login-card button:hover { background:#0097a7; }
+        .error { color:#ff5252; text-align:center; margin-top:0.5rem; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>BernishVuln_Shield Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" autocomplete="username" required />
+            <div class="pwd-container">
+                <input type="password" id="password" placeholder="Password" autocomplete="current-password" required />
+                <i class="fa-regular fa-eye" id="togglePassword"></i>
+            </div>
+            <button type="submit" id="loginBtn">Login</button>
+        </form>
+        <div class="error" id="errorMsg"></div>
+    </div>
+    <script src="login.js"></script>
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function (e) {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+</body>
+</html>
