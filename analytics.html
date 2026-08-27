@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Analytics | BernishVuln_Shield</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="auth.js"></script>
+    <style>
+        .analytics-container {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .data-table-wrapper {
+            background: rgba(10, 10, 14, 0.6);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            border-radius: 12px;
+            overflow-x: auto;
+            margin-top: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 2rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th, td {
+            padding: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+        th {
+            background: rgba(100, 255, 218, 0.05);
+            color: #64ffda;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        tr:hover {
+            background: rgba(100, 255, 218, 0.03);
+        }
+        .badge-ip {
+            color: #ff5252;
+            background: rgba(255, 82, 82, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        .badge-device {
+            color: #a8b2d1;
+        }
+        .badge-url {
+            color: #82aaff;
+        }
+        .badge-success {
+            color: #64ffda;
+            background: rgba(100, 255, 218, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        .badge-failed {
+            color: #ff5252;
+            background: rgba(255, 82, 82, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        .header-actions-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .btn-kick {
+            background: rgba(255, 82, 82, 0.15);
+            border: 1px solid rgba(255, 82, 82, 0.3);
+            color: #ff5252;
+            cursor: pointer;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-kick:hover {
+            background: #ff5252;
+            color: white;
+        }
+        .section-title {
+            margin-top: 3rem;
+            color: #fff;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .section-title i {
+            color: #64ffda;
+        }
+    </style>
+</head>
+<body class="cyber-theme" style="overflow-y: auto; height: auto; min-height: 100vh;">
+    <div class="cyber-grid"></div>
+    <div class="glow-orb orb-1"></div>
+    
+    <div class="analytics-container">
+        <div class="header-actions-flex">
+            <div>
+                <h1 id="page-title" style="margin-bottom: 0.5rem;">Security Dashboard</h1>
+                <p class="text-muted">Advanced Session & Access Analytics</p>
+            </div>
+            <div>
+                <a href="index.html" class="btn btn-outline" style="margin-right: 1rem;">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Main App
+                </a>
+                <button class="btn" onclick="logout()" style="background: rgba(255, 82, 82, 0.15); border: 1px solid rgba(255, 82, 82, 0.3); color: #ff5252;">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-grid">
+            <div class="card card-glow border-accent-glow">
+                <p class="text-muted" style="margin:0; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px;">Active Devices</p>
+                <h1 style="font-size: 2.5rem; margin:0.5rem 0 0 0; color: #64ffda;" id="stat-active">0</h1>
+            </div>
+            <div class="card card-glow border-accent-glow">
+                <p class="text-muted" style="margin:0; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px;">Total Visits</p>
+                <h1 style="font-size: 2.5rem; margin:0.5rem 0 0 0; color: #82aaff;" id="stat-visits">0</h1>
+            </div>
+            <div class="card card-glow border-accent-glow">
+                <p class="text-muted" style="margin:0; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px;">Failed Logins</p>
+                <h1 style="font-size: 2.5rem; margin:0.5rem 0 0 0; color: #ff5252;" id="stat-failed">0</h1>
+            </div>
+            <div class="card card-glow border-accent-glow">
+                <p class="text-muted" style="margin:0; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px;">Unique IPs</p>
+                <h1 style="font-size: 2.5rem; margin:0.5rem 0 0 0; color: #ffd700;" id="stat-ips">0</h1>
+            </div>
+        </div>
+
+        <!-- Active Sessions Panel -->
+        <h2 class="section-title"><i class="fa-solid fa-mobile-screen-button"></i> Active Sessions Panel</h2>
+        <div class="data-table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Device & Browser</th>
+                        <th>IP Address</th>
+                        <th>Login Time</th>
+                        <th>Last Active</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="sessions-tbody">
+                    <tr><td colspan="5" style="text-align: center;">Loading sessions...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Login History Log -->
+        <h2 class="section-title"><i class="fa-solid fa-scroll"></i> Login History Log</h2>
+        <div class="data-table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Status</th>
+                        <th>Username Tried</th>
+                        <th>IP Address</th>
+                        <th>Device Info</th>
+                    </tr>
+                </thead>
+                <tbody id="login-tbody">
+                    <tr><td colspan="5" style="text-align: center;">Loading login history...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Visitor Logs -->
+        <h2 class="section-title"><i class="fa-solid fa-globe"></i> General Web Traffic</h2>
+        <div class="data-table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>IP Address</th>
+                        <th>Device & Browser</th>
+                        <th>Path Accessed</th>
+                    </tr>
+                </thead>
+                <tbody id="logs-tbody">
+                    <tr><td colspan="4" style="text-align: center;">Loading traffic...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function parseUserAgent(ua) {
+            let os = "Unknown OS";
+            let browser = "Unknown Browser";
+
+            if (ua.includes('Windows')) os = 'Windows';
+            else if (ua.includes('Mac OS')) os = 'macOS';
+            else if (ua.includes('Linux')) os = 'Linux';
+            else if (ua.includes('Android')) os = 'Android';
+            else if (ua.includes('iPhone') || ua.includes('iPad')) os = 'iOS';
+
+            if (ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Chrome';
+            else if (ua.includes('Safari') && !ua.includes('Chrome')) browser = 'Safari';
+            else if (ua.includes('Firefox')) browser = 'Firefox';
+            else if (ua.includes('Edg')) browser = 'Edge';
+
+            return `${os} | ${browser}`;
+        }
+
+        async function fetchDashboardData() {
+            const token = sessionStorage.getItem('vulnshield_token') || localStorage.getItem('vulnshield_token') || localStorage.getItem('vuln_token');
+            if (!token) { window.location.href = '/login.html'; return; }
+
+            try {
+                const decodedPayload = atob(token.split('.')[0].replace(/-/g, '+').replace(/_/g, '/'));
+                const username = decodedPayload.split(':')[0];
+                if (username !== 'bernish2004cyber') {
+                    window.location.href = '/index.html';
+                    return;
+                }
+            } catch(e) {}
+
+            try {
+                const res = await fetch('/api/analytics/dashboard', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (res.status === 401) { logout(); return; }
+                if (!res.ok) throw new Error('Failed to fetch data');
+
+                const data = await res.json();
+                renderDashboard(data);
+            } catch (err) {
+                console.error(err);
+                alert('Error loading dashboard data.');
+            }
+        }
+
+        async function kickSession(sessionId) {
+            if (!confirm('Are you sure you want to kick this device? They will be logged out immediately.')) return;
+            
+            const token = sessionStorage.getItem('vulnshield_token') || localStorage.getItem('vulnshield_token') || localStorage.getItem('vuln_token');
+            try {
+                const res = await fetch('/api/analytics/kick', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ sessionId })
+                });
+                
+                if (res.ok) {
+                    try {
+                        const decodedPayload = atob(token.split('.')[0].replace(/-/g, '+').replace(/_/g, '/'));
+                        const currentSessionId = decodedPayload.split(':')[1];
+                        if (sessionId === currentSessionId) {
+                            logout();
+                            return;
+                        }
+                    } catch(e){}
+                    fetchDashboardData();
+                } else {
+                    alert('Failed to kick session.');
+                }
+            } catch(e) {
+                alert('Error kicking session.');
+            }
+        }
+
+        function renderDashboard(data) {
+            const { activeSessions, loginHistory, visitorLogs } = data;
+
+            // Stats
+            document.getElementById('stat-active').innerText = Object.keys(activeSessions).length;
+            document.getElementById('stat-visits').innerText = visitorLogs.length;
+            
+            let failedCount = 0;
+            loginHistory.forEach(l => { if(l.status === 'failed') failedCount++; });
+            document.getElementById('stat-failed').innerText = failedCount;
+
+            const uniqueIps = new Set();
+            visitorLogs.forEach(v => uniqueIps.add(v.ip));
+            document.getElementById('stat-ips').innerText = uniqueIps.size;
+
+            // Current Session ID and Role
+            let currentSessionId = '';
+            let currentUserRole = 'user';
+            try {
+                const token = sessionStorage.getItem('vulnshield_token') || localStorage.getItem('vulnshield_token') || localStorage.getItem('vuln_token');
+                if (token) {
+                    const decodedPayload = atob(token.split('.')[0].replace(/-/g, '+').replace(/_/g, '/'));
+                    const parts = decodedPayload.split(':');
+                    const username = parts[0];
+                    currentSessionId = parts[1];
+                    if (username === 'bernish2004cyber') {
+                        currentUserRole = 'admin';
+                    }
+                }
+            } catch(e) {}
+
+            // Render Active Sessions
+            const sessionsBody = document.getElementById('sessions-tbody');
+            sessionsBody.innerHTML = '';
+            if (Object.keys(activeSessions).length === 0) {
+                sessionsBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No active sessions.</td></tr>';
+            } else {
+                for (const [id, session] of Object.entries(activeSessions)) {
+                    const isCurrent = id === currentSessionId;
+                    const tr = document.createElement('tr');
+                    
+                    let actionHtml = '';
+                    if (isCurrent) {
+                        actionHtml = '<span class="text-muted">Current Session</span>';
+                    } else if (currentUserRole === 'admin') {
+                        actionHtml = `<button class="btn-kick" onclick="kickSession('${id}')"><i class="fa-solid fa-user-xmark"></i> Kick</button>`;
+                    } else {
+                        actionHtml = '<span class="text-muted" style="font-size:0.8rem;">No Permission</span>';
+                    }
+
+                    tr.innerHTML = `
+                        <td><span class="badge-device">${parseUserAgent(session.userAgent)}</span><br><small class="text-muted" style="color:#64ffda;">User: ${session.username}</small></td>
+                        <td><span class="badge-ip">${session.ip}</span></td>
+                        <td>${new Date(session.loginTime).toLocaleString()}</td>
+                        <td>${new Date(session.lastActive).toLocaleString()}</td>
+                        <td>${actionHtml}</td>
+                    `;
+                    sessionsBody.appendChild(tr);
+                }
+            }
+
+            // Render Login History
+            const loginBody = document.getElementById('login-tbody');
+            loginBody.innerHTML = '';
+            if (loginHistory.length === 0) {
+                loginBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No login history.</td></tr>';
+            } else {
+                loginHistory.forEach(log => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${new Date(log.timestamp).toLocaleString()}</td>
+                        <td><span class="badge-${log.status}">${log.status.toUpperCase()}</span></td>
+                        <td>${log.username}</td>
+                        <td><span class="badge-ip">${log.ip}</span></td>
+                        <td><span class="badge-device">${parseUserAgent(log.userAgent)}</span></td>
+                    `;
+                    loginBody.appendChild(tr);
+                });
+            }
+
+            // Render Visitor Logs
+            const logsBody = document.getElementById('logs-tbody');
+            logsBody.innerHTML = '';
+            if (visitorLogs.length === 0) {
+                logsBody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No logs found.</td></tr>';
+            } else {
+                visitorLogs.forEach(log => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${new Date(log.timestamp).toLocaleString()}</td>
+                        <td><span class="badge-ip">${log.ip}</span></td>
+                        <td><span class="badge-device" title="${log.userAgent}">${parseUserAgent(log.userAgent)}</span></td>
+                        <td><span class="badge-url">${log.url}</span></td>
+                    `;
+                    logsBody.appendChild(tr);
+                });
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', fetchDashboardData);
+    </script>
+</body>
+</html>
