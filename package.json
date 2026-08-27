@@ -1,0 +1,12 @@
+{
+  "name": "vuln-shield",
+  "version": "1.2.0",
+  "description": "BernishVuln_Shield Advanced Client-Side Security Auditing & Vulnerability Scanner",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
