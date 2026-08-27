@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page Not Found | BernishVuln_Shield</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg-dark:       #050b15;
+            --bg-card:       rgba(10, 20, 40, 0.85);
+            --accent-cyan:   #00d4ff;
+            --accent-purple: #7c3aed;
+            --accent-red:    #ff3b6b;
+            --text-primary:  #e8f4fd;
+            --text-muted:    #6b8aaa;
+            --border:        rgba(0, 212, 255, 0.15);
+            --glow-cyan:     rgba(0, 212, 255, 0.25);
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        /* ── Animated cyber grid background ── */
+        .cyber-grid {
+            position: fixed; inset: 0; z-index: 0;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridDrift 20s linear infinite;
+        }
+        @keyframes gridDrift {
+            0%   { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
+
+        /* ── Glow orbs ── */
+        .orb {
+            position: fixed; border-radius: 50%; filter: blur(100px); z-index: 0; pointer-events: none;
+        }
+        .orb-1 { width: 500px; height: 500px; background: rgba(124, 58, 237, 0.15); top: -150px; right: -100px; }
+        .orb-2 { width: 400px; height: 400px; background: rgba(0, 212, 255, 0.10); bottom: -100px; left: -100px; }
+        .orb-3 { width: 300px; height: 300px; background: rgba(255, 59, 107, 0.10); top: 40%; left: 40%; transform: translate(-50%, -50%); }
+
+        /* ── Scanline ── */
+        .scanline {
+            position: fixed; inset: 0; z-index: 1; pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.06) 2px,
+                rgba(0, 0, 0, 0.06) 4px
+            );
+        }
+
+        /* ── Main layout ── */
+        .container {
+            position: relative; z-index: 2;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 24px;
+            text-align: center;
+        }
+
+        /* ── Shield icon ── */
+        .shield-wrap {
+            position: relative; margin-bottom: 32px;
+        }
+        .shield-icon {
+            font-size: 72px;
+            color: var(--accent-red);
+            filter: drop-shadow(0 0 20px rgba(255, 59, 107, 0.6));
+            animation: shieldPulse 2.5s ease-in-out infinite;
+        }
+        @keyframes shieldPulse {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 59, 107, 0.5)); transform: scale(1); }
+            50%       { filter: drop-shadow(0 0 40px rgba(255, 59, 107, 0.9)); transform: scale(1.05); }
+        }
+        .error-badge {
+            position: absolute; top: -8px; right: -16px;
+            background: var(--accent-red);
+            color: #fff; font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; font-weight: 700;
+            padding: 3px 8px; border-radius: 4px;
+            letter-spacing: 0.05em;
+            box-shadow: 0 0 12px rgba(255, 59, 107, 0.5);
+        }
+
+        /* ── 404 glitch number ── */
+        .glitch-wrap { position: relative; margin-bottom: 16px; }
+        .glitch {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(100px, 20vw, 180px);
+            font-weight: 700;
+            line-height: 1;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--accent-cyan);
+            text-shadow:
+                0 0 30px var(--glow-cyan),
+                0 0 60px rgba(0, 212, 255, 0.2);
+            animation: glitchAnim 4s infinite;
+            user-select: none;
+        }
+        .glitch::before, .glitch::after {
+            content: '404';
+            position: absolute; inset: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: inherit; font-weight: inherit; line-height: inherit;
+            color: transparent; -webkit-text-stroke: 2px;
+        }
+        .glitch::before {
+            -webkit-text-stroke-color: var(--accent-red);
+            animation: glitchBefore 4s infinite;
+            clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+        }
+        .glitch::after {
+            -webkit-text-stroke-color: var(--accent-purple);
+            animation: glitchAfter 4s infinite;
+            clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%);
+        }
+        @keyframes glitchAnim {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-3px, 1px); }
+            94% { transform: translate(3px, -1px); }
+            96% { transform: translate(-2px, 2px); }
+            98% { transform: translate(2px, -2px); }
+        }
+        @keyframes glitchBefore {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(4px, 0); }
+            94% { transform: translate(-4px, 0); }
+        }
+        @keyframes glitchAfter {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-4px, 0); }
+            94% { transform: translate(4px, 0); }
+        }
+
+        /* ── Card ── */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px 48px;
+            max-width: 560px; width: 100%;
+            backdrop-filter: blur(20px);
+            box-shadow:
+                0 0 0 1px rgba(0, 212, 255, 0.08),
+                0 24px 64px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .headline {
+            font-size: 24px; font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        .headline span {
+            color: var(--accent-cyan);
+        }
+
+        .subtext {
+            color: var(--text-muted);
+            font-size: 15px; line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        /* ── Terminal line ── */
+        .terminal-line {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 212, 255, 0.12);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--accent-red);
+            text-align: left;
+            margin-bottom: 32px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .terminal-line .prompt { color: var(--accent-cyan); }
+
+        /* ── Buttons ── */
+        .btn-row {
+            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 13px 28px; border-radius: 10px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px; font-weight: 600;
+            text-decoration: none; cursor: pointer; border: none;
+            transition: all 0.25s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), #0099cc);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(0, 212, 255, 0.55);
+        }
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        .btn-ghost:hover {
+            background: rgba(0, 212, 255, 0.08);
+            border-color: var(--accent-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* ── Logo top ── */
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+            padding: 16px 32px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .logo-icon { color: var(--accent-cyan); font-size: 20px; }
+        .logo-text { font-weight: 800; font-size: 16px; letter-spacing: -0.02em; }
+        .logo-text span { color: var(--accent-cyan); }
+
+        /* ── Status dots ── */
+        .status-row {
+            display: flex; justify-content: center; gap: 20px;
+            margin-top: 28px; flex-wrap: wrap;
+        }
+        .status-item {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 12px; color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .dot {
+            width: 7px; height: 7px; border-radius: 50%;
+        }
+        .dot-red    { background: var(--accent-red);    box-shadow: 0 0 6px var(--accent-red); }
+        .dot-cyan   { background: var(--accent-cyan);   box-shadow: 0 0 6px var(--accent-cyan); }
+        .dot-purple { background: var(--accent-purple); box-shadow: 0 0 6px var(--accent-purple); }
+    </style>
+</head>
+<body>
+    <!-- Background -->
+    <div class="cyber-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="scanline"></div>
+
+    <!-- Top logo bar -->
+    <div class="topbar">
+        <i class="fa-solid fa-shield-halved logo-icon fa-beat-fade"></i>
+        <div class="logo-text">Bernish<span>Vuln</span>_Shield</div>
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
+
+        <!-- Shield + badge -->
+        <div class="shield-wrap">
+            <i class="fa-solid fa-shield-exclamation shield-icon"></i>
+            <span class="error-badge">ERR_404</span>
+        </div>
+
+        <!-- Glitch 404 -->
+        <div class="glitch-wrap">
+            <div class="glitch">404</div>
+        </div>
+
+        <!-- Card -->
+        <div class="card">
+            <h1 class="headline">Target <span>Not Found</span></h1>
+            <p class="subtext">
+                The page you're looking for doesn't exist or has been moved.<br>
+                No vulnerabilities to scan here — just a missing route.
+            </p>
+
+            <div class="terminal-line">
+                <span class="prompt">vulnshield@scan:~$</span>
+                <span>curl -I https://vulnshield.onrender.com<span id="typed-path"></span></span>
+                <span style="color:var(--accent-red);">→ HTTP 404</span>
+            </div>
+
+            <div class="btn-row">
+                <a href="/" class="btn btn-primary">
+                    <i class="fa-solid fa-house"></i>
+                    Return to Dashboard
+                </a>
+                <a href="javascript:history.back()" class="btn btn-ghost">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Go Back
+                </a>
+            </div>
+
+            <div class="status-row">
+                <div class="status-item"><span class="dot dot-red"></span> PAGE_NOT_FOUND</div>
+                <div class="status-item"><span class="dot dot-cyan"></span> SYSTEM_ONLINE</div>
+                <div class="status-item"><span class="dot dot-purple"></span> SCANNER_READY</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Typing animation for the terminal path
+        const path = window.location.pathname;
+        const el = document.getElementById('typed-path');
+        let i = 0;
+        function type() {
+            if (i < path.length) {
+                el.textContent += path[i++];
+                setTimeout(type, 60);
+            }
+        }
+        setTimeout(type, 800);
+    </script>
+</body>
+</html>
